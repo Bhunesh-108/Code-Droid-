@@ -1,0 +1,6 @@
+{
+  "name": "CodeDroid Mobile IDE",
+  "description": "A powerful VS Code alternative built for coding on Android phones with full syntax highlighting, Git integration, touch coding keyboard, and built-in terminal for Python, JS, C++, and ALP.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

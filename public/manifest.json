@@ -1,0 +1,18 @@
+{
+  "name": "CodeDroid Mobile IDE",
+  "short_name": "CodeDroid",
+  "description": "VS Code alternative built for coding on Android with syntax highlighting, Git, terminal, and touch keyboard.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
