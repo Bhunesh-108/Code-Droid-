@@ -11,7 +11,9 @@ import {
   Settings,
   Cpu,
   RotateCw,
-  FolderOpen
+  FolderOpen,
+  Globe,
+  GraduationCap
 } from 'lucide-react';
 
 interface AndroidStatusHeaderProps {
@@ -24,6 +26,8 @@ interface AndroidStatusHeaderProps {
   onRunCurrentFile: () => void;
   onOpenTerminal: () => void;
   onOpenCommandPalette: () => void;
+  onOpenWebPreview?: () => void;
+  onOpenGuide?: () => void;
   onToggleSidebarTab: (tab: 'files' | 'git' | 'search' | 'alp' | 'settings') => void;
   activeSidebarTab: 'files' | 'git' | 'search' | 'alp' | 'settings' | null;
   isRunning?: boolean;
@@ -40,6 +44,8 @@ export const AndroidStatusHeader: React.FC<AndroidStatusHeaderProps> = ({
   onRunCurrentFile,
   onOpenTerminal,
   onOpenCommandPalette,
+  onOpenWebPreview,
+  onOpenGuide,
   onToggleSidebarTab,
   activeSidebarTab,
   isRunning = false,
@@ -236,6 +242,28 @@ export const AndroidStatusHeader: React.FC<AndroidStatusHeaderProps> = ({
           >
             <TerminalIcon className="w-4 h-4 text-sky-400" />
           </button>
+
+          {onOpenWebPreview && (
+            <button
+              onClick={onOpenWebPreview}
+              className="p-1.5 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-950/40 active:scale-95 rounded-md transition-all"
+              title="Live Web Page Preview (HTML / CSS / JS)"
+              aria-label="Live Web Page Preview"
+            >
+              <Globe className="w-4 h-4" />
+            </button>
+          )}
+
+          {onOpenGuide && (
+            <button
+              onClick={onOpenGuide}
+              className="p-1.5 text-amber-400 hover:text-amber-300 hover:bg-amber-950/40 active:scale-95 rounded-md transition-all"
+              title="Beginner Guide: How Web Development Works"
+              aria-label="Beginner Guide"
+            >
+              <GraduationCap className="w-4 h-4" />
+            </button>
+          )}
 
           <button
             onClick={() => onToggleSidebarTab('settings')}

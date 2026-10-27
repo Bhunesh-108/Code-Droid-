@@ -376,6 +376,187 @@ END START
   },
   {
     id: '11',
+    name: 'index.html',
+    path: 'index.html',
+    type: 'file',
+    language: 'html',
+    content: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Mobile Web App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <div class="badge">🌐 Mobile Web Page</div>
+    <h1>Hello from CodeDroid!</h1>
+    <p>Created and tested directly on an Android phone.</p>
+
+    <div class="counter-box">
+      <span class="label">Interactive Tap Counter:</span>
+      <span id="counter" class="count">0</span>
+      <button id="btn-count" class="btn primary">Tap Me!</button>
+    </div>
+
+    <div class="actions">
+      <button id="btn-theme" class="btn secondary">Toggle Dark / Light</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+`,
+  },
+  {
+    id: '12',
+    name: 'style.css',
+    path: 'style.css',
+    type: 'file',
+    language: 'css',
+    content: `/* Modern Mobile-First Stylesheet */
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  --card-bg: rgba(30, 41, 59, 0.85);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --accent: #38bdf8;
+  --primary-btn: linear-gradient(135deg, #0284c7, #2563eb);
+}
+
+body.light-theme {
+  --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-main: #0f172a;
+  --text-sub: #475569;
+  --accent: #0284c7;
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0 0 1.5rem;
+  color: var(--text-sub);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.counter-box {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.count {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+  width: 100%;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn.primary {
+  background: var(--primary-btn);
+  color: white;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.btn.secondary {
+  background: rgba(148, 163, 184, 0.2);
+  color: var(--text-main);
+}
+`,
+  },
+  {
+    id: '13',
+    name: 'app.js',
+    path: 'app.js',
+    type: 'file',
+    language: 'javascript',
+    content: `// Interactive Mobile Web App Logic
+console.log("Web page mounted successfully from CodeDroid!");
+
+let count = 0;
+const counterEl = document.getElementById('counter');
+const countBtn = document.getElementById('btn-count');
+const themeBtn = document.getElementById('btn-theme');
+
+countBtn.addEventListener('click', () => {
+  count++;
+  counterEl.textContent = count;
+  console.log("Tapped count button, new score:", count);
+});
+
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light-theme');
+  const isLight = document.body.classList.contains('light-theme');
+  console.log("Theme switched to:", isLight ? 'Light Mode' : 'Dark Mode');
+});
+`,
+  },
+  {
+    id: '14',
     name: 'README.md',
     path: 'README.md',
     type: 'file',
@@ -385,6 +566,7 @@ END START
 An all-in-one mobile-first alternative to VS Code designed to make coding on an Android phone smooth, fast, and ergonomic.
 
 ## 🌐 Supported Languages:
+- **HTML, CSS & JavaScript** (With Live Web Page Preview 📱)
 - **C** (\`.c\`, \`.h\`)
 - **C#** (\`.cs\`)
 - **Swift** (\`.swift\`)

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, FileCode, Play, Terminal, GitBranch, Settings, X, Cpu } from 'lucide-react';
+import { Search, FileCode, Play, Terminal, GitBranch, Settings, X, Cpu, Globe, GraduationCap } from 'lucide-react';
 
 interface CommandPaletteModalProps {
   files: Record<string, string>;
@@ -10,6 +10,8 @@ interface CommandPaletteModalProps {
   onOpenGit: () => void;
   onOpenAlp: () => void;
   onOpenSettings: () => void;
+  onOpenWebPreview?: () => void;
+  onOpenGuide?: () => void;
 }
 
 export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
@@ -21,6 +23,8 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
   onOpenGit,
   onOpenAlp,
   onOpenSettings,
+  onOpenWebPreview,
+  onOpenGuide,
 }) => {
   const [query, setQuery] = useState('');
 
@@ -80,6 +84,26 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
         },
       },
       {
+        id: 'cmd-web-preview',
+        title: 'View: Open Live Web Page Preview (HTML / CSS / JS)',
+        category: 'Commands',
+        icon: <Globe className="w-4 h-4 text-emerald-400" />,
+        action: () => {
+          if (onOpenWebPreview) onOpenWebPreview();
+          onClose();
+        },
+      },
+      {
+        id: 'cmd-guide',
+        title: 'Help: Open Beginner Web Development Guide & Walkthrough',
+        category: 'Help',
+        icon: <GraduationCap className="w-4 h-4 text-amber-400" />,
+        action: () => {
+          if (onOpenGuide) onOpenGuide();
+          onClose();
+        },
+      },
+      {
         id: 'cmd-settings',
         title: 'Preferences: Open IDE Settings',
         category: 'Commands',
@@ -90,7 +114,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
         },
       },
     ];
-  }, [onRunCurrent, onOpenTerminal, onOpenGit, onOpenAlp, onOpenSettings, onClose]);
+  }, [onRunCurrent, onOpenTerminal, onOpenGit, onOpenAlp, onOpenSettings, onOpenWebPreview, onOpenGuide, onClose]);
 
   const allItems = [...commandActions, ...fileActions];
 

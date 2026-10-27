@@ -11,6 +11,8 @@ import { SettingsPanel } from './components/SettingsPanel';
 import { TerminalPanel } from './components/TerminalPanel';
 import { GitDiffModal } from './components/GitDiffModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
+import { WebPreviewModal } from './components/WebPreviewModal';
+import { BeginnerGuideModal } from './components/BeginnerGuideModal';
 
 import { INITIAL_FILES, getLanguageFromFilename } from './utils/fileSystem';
 import { GitEngine } from './utils/gitEngine';
@@ -51,12 +53,12 @@ export default function App() {
   };
 
   // 3. Active Tabs and Editor state
-  const [activeFile, setActiveFile] = useState<string>('main.rs');
+  const [activeFile, setActiveFile] = useState<string>('index.html');
   const [openTabs, setOpenTabs] = useState<OpenTab[]>([
+    { fileId: '11', path: 'index.html', name: 'index.html', language: 'html' },
+    { fileId: '12', path: 'style.css', name: 'style.css', language: 'css' },
+    { fileId: '13', path: 'app.js', name: 'app.js', language: 'javascript' },
     { fileId: '6', path: 'main.rs', name: 'main.rs', language: 'rust' },
-    { fileId: '4', path: 'Program.cs', name: 'Program.cs', language: 'csharp' },
-    { fileId: '5', path: 'main.swift', name: 'main.swift', language: 'swift' },
-    { fileId: '3', path: 'kernel.c', name: 'kernel.c', language: 'c' },
     { fileId: '1', path: 'main.py', name: 'main.py', language: 'python' },
     { fileId: '10', path: 'addition_alp.asm', name: 'addition_alp.asm', language: 'alp' },
   ]);
@@ -77,6 +79,8 @@ export default function App() {
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isMobileDeviceView, setIsMobileDeviceView] = useState(true);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isWebPreviewOpen, setIsWebPreviewOpen] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const [diffModalFile, setDiffModalFile] = useState<string | null>(null);
   const [executionOutput, setExecutionOutput] = useState<string>('');
   const [isRunning, setIsRunning] = useState(false);
@@ -170,10 +174,20 @@ export default function App() {
   // Run Current Active File
   const handleRunCurrentFile = async () => {
     if (!activeFile || !files[activeFile]) return;
+
+    const lang = getLanguageFromFilename(activeFile);
+
+    // If running HTML, automatically launch the Live Web Page Preview
+    if (lang === 'html' || activeFile.endsWith('.html') || activeFile.endsWith('.htm')) {
+      setIsWebPreviewOpen(true);
+      setIsTerminalOpen(true);
+      setExecutionOutput(`[CodeDroid Web Preview]\n🌐 Live browser launched for ${activeFile}!\nAuto-injected style.css & app.js into live viewport.`);
+      return;
+    }
+
     setIsRunning(true);
     setIsTerminalOpen(true);
 
-    const lang = getLanguageFromFilename(activeFile);
     const result = await CodeRunner.runCode(files[activeFile], lang);
 
     let outputText = `[CodeDroid Runner] ${activeFile} (${lang.toUpperCase()})\n`;
@@ -290,6 +304,8 @@ export default function App() {
           onRunCurrentFile={handleRunCurrentFile}
           onOpenTerminal={() => setIsTerminalOpen(!isTerminalOpen)}
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onOpenWebPreview={() => setIsWebPreviewOpen(true)}
+          onOpenGuide={() => setIsGuideOpen(true)}
           onToggleSidebarTab={tab =>
             setActiveSidebarTab(prev => (prev === tab ? null : tab))
           }
@@ -452,8 +468,28 @@ export default function App() {
             onOpenGit={() => setActiveSidebarTab('git')}
             onOpenAlp={() => setActiveSidebarTab('alp')}
             onOpenSettings={() => setActiveSidebarTab('settings')}
+            onOpenWebPreview={() => setIsWebPreviewOpen(true)}
+            onOpenGuide={() => setIsGuideOpen(true)}
           />
         )}
+
+        {/* 6. Live Web Page Preview Modal */}
+        {isWebPreviewOpen && (
+          <WebPreviewModal
+            files={files}
+            activeFile={activeFile}
+            onClose={() => setIsWebPreviewOpen(false)}
+            onSelectFile={path => handleSelectFile(path)}
+          />
+        )}
+
+        {/* 7. Beginner Web Development Guide Modal */}
+        <BeginnerGuideModal
+          isOpen={isGuideOpen}
+          onClose={() => setIsGuideOpen(false)}
+          onSelectFile={path => handleSelectFile(path)}
+          onOpenWebPreview={() => setIsWebPreviewOpen(true)}
+        />
       </div>
     </div>
   );
