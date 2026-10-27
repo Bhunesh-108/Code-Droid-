@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, FileCode, Play, Terminal, GitBranch, Settings, X, Cpu, Globe, GraduationCap } from 'lucide-react';
+import { Search, FileCode, Play, Terminal, GitBranch, Settings, X, Cpu, Globe, GraduationCap, Smartphone } from 'lucide-react';
 
 interface CommandPaletteModalProps {
   files: Record<string, string>;
@@ -12,6 +12,7 @@ interface CommandPaletteModalProps {
   onOpenSettings: () => void;
   onOpenWebPreview?: () => void;
   onOpenGuide?: () => void;
+  onOpenApkModal?: () => void;
 }
 
 export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
@@ -25,6 +26,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
   onOpenSettings,
   onOpenWebPreview,
   onOpenGuide,
+  onOpenApkModal,
 }) => {
   const [query, setQuery] = useState('');
 
@@ -100,6 +102,16 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
         icon: <GraduationCap className="w-4 h-4 text-amber-400" />,
         action: () => {
           if (onOpenGuide) onOpenGuide();
+          onClose();
+        },
+      },
+      {
+        id: 'cmd-apk-install',
+        title: 'Android: Install Phone App or Build APK (Gradle 9.6.0)',
+        category: 'Android',
+        icon: <Smartphone className="w-4 h-4 text-emerald-400" />,
+        action: () => {
+          if (onOpenApkModal) onOpenApkModal();
           onClose();
         },
       },

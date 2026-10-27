@@ -13,6 +13,7 @@ import { GitDiffModal } from './components/GitDiffModal';
 import { CommandPaletteModal } from './components/CommandPaletteModal';
 import { WebPreviewModal } from './components/WebPreviewModal';
 import { BeginnerGuideModal } from './components/BeginnerGuideModal';
+import { ApkInstallModal } from './components/ApkInstallModal';
 
 import { INITIAL_FILES, getLanguageFromFilename } from './utils/fileSystem';
 import { GitEngine } from './utils/gitEngine';
@@ -81,6 +82,7 @@ export default function App() {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isWebPreviewOpen, setIsWebPreviewOpen] = useState(false);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [isApkModalOpen, setIsApkModalOpen] = useState(false);
   const [diffModalFile, setDiffModalFile] = useState<string | null>(null);
   const [executionOutput, setExecutionOutput] = useState<string>('');
   const [isRunning, setIsRunning] = useState(false);
@@ -306,6 +308,7 @@ export default function App() {
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
           onOpenWebPreview={() => setIsWebPreviewOpen(true)}
           onOpenGuide={() => setIsGuideOpen(true)}
+          onOpenApkModal={() => setIsApkModalOpen(true)}
           onToggleSidebarTab={tab =>
             setActiveSidebarTab(prev => (prev === tab ? null : tab))
           }
@@ -401,6 +404,7 @@ export default function App() {
                   onUpdateSettings={newSt =>
                     setEditorSettings(prev => ({ ...prev, ...newSt }))
                   }
+                  onOpenApkModal={() => setIsApkModalOpen(true)}
                 />
               )}
             </div>
@@ -470,6 +474,7 @@ export default function App() {
             onOpenSettings={() => setActiveSidebarTab('settings')}
             onOpenWebPreview={() => setIsWebPreviewOpen(true)}
             onOpenGuide={() => setIsGuideOpen(true)}
+            onOpenApkModal={() => setIsApkModalOpen(true)}
           />
         )}
 
@@ -489,6 +494,12 @@ export default function App() {
           onClose={() => setIsGuideOpen(false)}
           onSelectFile={path => handleSelectFile(path)}
           onOpenWebPreview={() => setIsWebPreviewOpen(true)}
+        />
+
+        {/* 8. Phone Installation & Gradle 9.6.0 APK Modal */}
+        <ApkInstallModal
+          isOpen={isApkModalOpen}
+          onClose={() => setIsApkModalOpen(false)}
         />
       </div>
     </div>

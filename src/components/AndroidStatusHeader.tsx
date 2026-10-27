@@ -13,7 +13,8 @@ import {
   RotateCw,
   FolderOpen,
   Globe,
-  GraduationCap
+  GraduationCap,
+  Download
 } from 'lucide-react';
 
 interface AndroidStatusHeaderProps {
@@ -28,6 +29,7 @@ interface AndroidStatusHeaderProps {
   onOpenCommandPalette: () => void;
   onOpenWebPreview?: () => void;
   onOpenGuide?: () => void;
+  onOpenApkModal?: () => void;
   onToggleSidebarTab: (tab: 'files' | 'git' | 'search' | 'alp' | 'settings') => void;
   activeSidebarTab: 'files' | 'git' | 'search' | 'alp' | 'settings' | null;
   isRunning?: boolean;
@@ -46,6 +48,7 @@ export const AndroidStatusHeader: React.FC<AndroidStatusHeaderProps> = ({
   onOpenCommandPalette,
   onOpenWebPreview,
   onOpenGuide,
+  onOpenApkModal,
   onToggleSidebarTab,
   activeSidebarTab,
   isRunning = false,
@@ -262,6 +265,17 @@ export const AndroidStatusHeader: React.FC<AndroidStatusHeaderProps> = ({
               aria-label="Beginner Guide"
             >
               <GraduationCap className="w-4 h-4" />
+            </button>
+          )}
+
+          {onOpenApkModal && (
+            <button
+              onClick={onOpenApkModal}
+              className="p-1.5 text-blue-400 hover:text-blue-300 hover:bg-blue-950/40 active:scale-95 rounded-md transition-all flex items-center gap-1"
+              title="Install Phone App / Build APK (Gradle 9.6.0)"
+              aria-label="Install Phone App or Build APK"
+            >
+              <Download className="w-4 h-4" />
             </button>
           )}
 

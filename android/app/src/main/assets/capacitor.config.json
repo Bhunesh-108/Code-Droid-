@@ -1,0 +1,14 @@
+{
+	"appId": "com.codedroid.ide",
+	"appName": "CodeDroid Mobile IDE",
+	"webDir": "dist",
+	"bundledWebRuntime": false,
+	"server": {
+		"androidScheme": "https",
+		"cleartext": true
+	},
+	"android": {
+		"allowMixedContent": true,
+		"backgroundColor": "#090d16"
+	}
+}

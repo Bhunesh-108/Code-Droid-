@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Settings as SettingsIcon, Sliders, Type, Palette, Vibrate, VibrateOff } from 'lucide-react';
+import { Settings as SettingsIcon, Sliders, Type, Palette, Vibrate, VibrateOff, Smartphone } from 'lucide-react';
 import { EditorSettings, ThemeType } from '../types';
 import { triggerHaptic, HapticPatterns } from '../utils/haptics';
 
 interface SettingsPanelProps {
   settings: EditorSettings;
   onUpdateSettings: (newSettings: Partial<EditorSettings>) => void;
+  onOpenApkModal?: () => void;
 }
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   settings,
   onUpdateSettings,
+  onOpenApkModal,
 }) => {
   const [testedHaptic, setTestedHaptic] = useState(false);
 
@@ -179,6 +181,31 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
           )}
         </div>
 
+        {/* Mobile Phone Installation (PWA) */}
+        <div className="p-2.5 rounded-lg bg-gradient-to-br from-[#182030] to-[#121622] border border-blue-500/30 space-y-2">
+          <div className="flex items-center gap-1.5 text-blue-400 font-semibold text-xs">
+            <Smartphone className="w-3.5 h-3.5" />
+            Install on Mobile Phone (PWA)
+          </div>
+          <p className="text-[11px] text-zinc-300 leading-relaxed">
+            Install CodeDroid as a standalone, fullscreen native-feeling app on your Android or iPhone with offline support.
+          </p>
+          <div className="text-[10px] text-zinc-400 space-y-1 bg-black/30 p-2 rounded border border-zinc-700/50">
+            <div><span className="text-emerald-400 font-semibold">Android Chrome:</span> Tap browser menu (⋮) → <span className="text-zinc-200">"Install app"</span> or <span className="text-zinc-200">"Add to Home screen"</span></div>
+            <div><span className="text-amber-400 font-semibold">iPhone Safari:</span> Tap Share (⎋) → <span className="text-zinc-200">"Add to Home Screen"</span></div>
+          </div>
+          {onOpenApkModal && (
+            <button
+              type="button"
+              onClick={onOpenApkModal}
+              className="w-full py-1.5 px-2.5 bg-blue-600/30 hover:bg-blue-600/50 active:bg-blue-600/70 text-blue-300 rounded border border-blue-500/40 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              Open APK (Gradle 9.6.0) & Phone Guide
+            </button>
+          )}
+        </div>
+
         {/* About Info */}
         <div className="pt-2 border-t border-zinc-700/60 space-y-1 text-zinc-400 text-[11px]">
           <div className="font-semibold text-zinc-300">CodeDroid Mobile IDE v1.2</div>
@@ -189,3 +216,4 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
     </div>
   );
 };
+
